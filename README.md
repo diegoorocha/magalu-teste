@@ -24,6 +24,7 @@ Utilizado banco de dados `MYSql`, com o ORM `entity framework core 7`.
 
 -- *Executar o segundo script chamado: `INSERT TABLE - CLIENTE.sql` para inserir dados a tabela.*
 
+
 3 - Executar o projeto WEB chamado `DSR-MAGALU-WEB`, necessário defini-lo como projeto de inicialização !
 
 # Projeto rodando
