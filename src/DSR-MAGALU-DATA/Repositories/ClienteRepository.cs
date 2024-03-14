@@ -3,7 +3,6 @@ using DSR_MAGALU_DATA.Entities;
 using DSR_MAGALU_DATA.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
 using MySql.EntityFrameworkCore.Extensions;
-using System.Linq;
 
 namespace DSR_MAGALU_DATA.Repositories
 {
