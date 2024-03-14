@@ -1,0 +1,140 @@
+﻿@model DSR_MAGALU_BUSINESS.Models.ClienteViewModel
+@using DSR_MAGALU_BUSINESS.Helpers
+@using DSR_MAGALU_DATA.Enums;
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <h5 class="card-header">Editar Cliente</h5>
+                <hr class="my-0">
+                <div class="card-body">
+                    @using (Html.BeginForm("Editar", "Cliente", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.HiddenFor(x => x.Id)
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="mb-3 col-md-12" disabled data-bs-toggle="tooltip" data-bs-html="true" title="Nome completo ou Razão Social do Cliente.">
+                                    @Html.Label("","Nome do Cliente/Razão Social", new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.NomeClienteRazaoSocial, new { htmlAttributes = new { @class = "form-control", autofocus="", @required = "required"}})
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-4" disabled data-bs-toggle="tooltip" data-bs-html="true" title="E-mail do Cliente.">
+                                    @Html.Label("","E-mail ", new { @class = "form-label", id="label-icon-email" })
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="addon-email">@@</span>
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes =
+                                    new { @class = "form-control", @aria_describedby="addon-email", @id="email", @required = "required" }})
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-md-4" disabled data-bs-toggle="tooltip" data-bs-html="true" title="Telefone do Cliente.">
+                                    @Html.Label("","Telefone", new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.Telefone, new { htmlAttributes = new { @class = "form-control", @required = "required", id="telefone", @maxlength = "15", @onkeypress="mascaraTelefone(event)"}})
+                                </div>
+                                <div class="mb-3 col-md-4">
+                                    @Html.Label("","Data de Cadastro", new { @class = "form-label" })
+                                    @Html.TextBoxFor(model => model.DataCadastro, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = "readonly"})
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-3" disabled data-bs-toggle="tooltip" data-bs-html="true" title="Selecione o tipo de Pessoa.">
+                                    @Html.Label("","Tipo de Pessoa", new { @class = "form-label" })
+                                    @Html.DropDownListFor(model => model.TipoPessoa,
+                                new SelectList(Enum.GetValues(typeof(EnumHelpers.TipoPessoa))), new { @class = "form-control", required = "required" })
+                                </div>
+                                <div class="mb-3 col-md-3" disabled data-bs-toggle="tooltip" data-bs-html="true" title="Insira o CPF ou o CNPJ do Cliente.">
+                                    @Html.Label("","CPF/CNPJ ", new { @class = "form-label", id="label-icon-documento"})
+                                    @Html.EditorFor(model => model.Documento, new { htmlAttributes = new { @class = "form-control", @id="documento", @required = "required", maxlength = "18", onkeypress = "mascaraDocumento(event)", onpaste = "mascaraDocumentoColar(event)"}})
+                                </div>
+                                <div class="mb-3 col-md-3" id="input-inscricao-estadual" disabled data-bs-toggle="tooltip" data-bs-html="true" title="Inscrição Estadual do Cliente, selecionar Isento caso assim for.">
+                                    @Html.Label("","Inscrição Estadual", new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.InscricaoEstadual, new { htmlAttributes = new { @class = "form-control", @required = "required"}})
+                                </div>
+                                <div class="mb-3 col-md-3">
+                                    @Html.Label("","Isento?", new { @class = "form-label" })
+                                    <div class="form-check form-switch">
+                                        @Html.CheckBoxFor(model => model.Isento, new { @class="form-check-input", @type="checkbox", @role="switch", @id="isento" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-4" disabled data-bs-toggle="tooltip" data-bs-html="true" title="Selecione o gênero do Cliente.">
+                                    @Html.Label("","Gênero", new { @class = "form-label" })
+                                    @Html.DropDownListFor(model => model.Genero,
+                                new SelectList(Enum.GetValues(typeof(EnumHelpers.Genero))), new { @class = "form-control", @required = "required" })
+                                </div>
+                                <div class="mb-3 col-md-4" disabled data-bs-toggle="tooltip" data-bs-html="true" title="Data de nascimento do Cliente.">
+                                    @Html.Label("","Data Nascimento", new { @class = "form-label" })
+                                    <input asp-for="@Model.DataNascimento" class="form-control" type="date" required />
+                                </div>
+                                <div class="mb-3 col-md-4">
+                                    @Html.Label("","Bloqueado?", new { @class = "form-label" })
+                                    <div class="form-check form-switch">
+                                        @Html.CheckBoxFor(model => model.Bloqueado, new { @class="form-check-input", @type="checkbox", @role="switch" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    @Html.Label("","Senha", new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.Senha, new { htmlAttributes = new { @class = "form-control", @type="password", id="senha",@readonly = "readonly"}})
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    @Html.Label("","Confirma Senha", new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.ConfirmaSenha, new { htmlAttributes = new { @class = "form-control", @type="password", id="confirmasenha", @readonly = "readonly"}})
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <button type="submit" class="btn btn-primary me-2">Editar</button>
+                            <button type="reset" class="btn btn-outline-secondary">Voltar</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    // Inicio -> Open / Close input Inscrição Estadual
+    const isentoInput = document.querySelector('#isento');
+    const inscricaoEstadualInput = document.querySelector('#InscricaoEstadual');
+
+    isentoInput.addEventListener('change', (event) => {
+        if (event.target.checked) {
+            inscricaoEstadualInput.readOnly = true;
+        } else {
+            inscricaoEstadualInput.readOnly = false;
+        }
+    });
+    // Fim -> Open / Close input Inscrição Estadual
+
+
+    // INICIO -> Mascara Documento CPF / CNPJ
+
+    function mascaraDocumento(event) {
+        const input = event.target;
+        let documento = input.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+        let valorMascara = '';
+
+        if (documento.length <= 11) {
+            // CPF
+            valorMascara = documento.replace(/(\d{3})(\d{3})(\d{3})/, '$1.$2.$3-');
+        } else {
+            // CNPJ
+            valorMascara = documento.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+        }
+        input.value = valorMascara.substring(0, 18); // Limita o campo ao número máximo de caracteres
+    }
+
+    function mascaraDocumentoColar(event) {
+        setTimeout(function () {
+            mascaraDocumento(event);
+        }, 10);
+    }
+            // FIM -> Mascara Documento CPF / CNPJ
+
+</script>

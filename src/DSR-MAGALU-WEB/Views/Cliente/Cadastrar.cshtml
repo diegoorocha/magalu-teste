@@ -1,0 +1,304 @@
+﻿@model DSR_MAGALU_BUSINESS.Models.ClienteViewModel
+@using DSR_MAGALU_BUSINESS.Helpers
+@using DSR_MAGALU_DATA.Enums;
+
+<div class="card">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="card-body">
+            <div class="card">
+                <div class="card-header">
+                    Cadastro de Clientes
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Cadastrar", "Cliente", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="mb-3 col-md-12" disabled data-bs-toggle="tooltip" data-bs-html="true" title="Nome completo ou Razão Social do Cliente.">
+                                    @Html.Label("","Nome do Cliente/Razão Social", new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.NomeClienteRazaoSocial, new { htmlAttributes = new { @class = "form-control", autofocus="", @required = "required"}})
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-4" disabled data-bs-toggle="tooltip" data-bs-html="true" title="E-mail do Cliente.">
+                                    @Html.Label("","E-mail ", new { @class = "form-label", id="label-icon-email" })
+                                    <small class="text-muted float-end">
+                                        <button class="btn btn-sm btn-primary btn-validacao-email" id="" disabled data-bs-toggle="tooltip" data-bs-html="true" title="Necessário validar se o e-mail já está em uso no sistema!">Validar</button>
+                                    </small>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="addon-email">@@</span>
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes =
+                                    new { @class = "form-control", @aria_describedby="addon-email", @id="email", @required = "required" }})
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-md-4" disabled data-bs-toggle="tooltip" data-bs-html="true" title="Telefone do Cliente.">
+                                    @Html.Label("","Telefone", new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.Telefone, new { htmlAttributes = new { @class = "form-control", @required = "required", id="telefone", @maxlength = "11"}})
+                                </div>
+                                <div class="mb-3 col-md-4">
+                                    @Html.Label("","Data de Cadastro", new { @class = "form-label" })
+                                    @Html.TextBoxFor(model => model.DataCadastro, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = "readonly"})
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-3" disabled data-bs-toggle="tooltip" data-bs-html="true" title="Selecione o tipo de Pessoa.">
+                                    @Html.Label("","Tipo de Pessoa", new { @class = "form-label" })
+                                    @Html.DropDownListFor(model => model.TipoPessoa,
+                                new SelectList(Enum.GetValues(typeof(EnumHelpers.TipoPessoa))), new { @class = "form-control", required = "required" })
+                                </div>
+                                <div class="mb-3 col-md-3" disabled data-bs-toggle="tooltip" data-bs-html="true" title="Insira o CPF ou o CNPJ do Cliente.">
+                                    @Html.Label("","CPF/CNPJ ", new { @class = "form-label", id="label-icon-documento"})
+                                    <small class="text-muted float-end">
+                                        <button class="btn btn-sm btn-primary btn-validacao-documento" disabled data-bs-toggle="tooltip" data-bs-html="true" title="<i class='fa-solid fa-circle-info fa-xs'></i> <span class='small'>Necessário validar se o e-mail já está em uso no sistema!</span>">Validar</button>
+                                    </small>
+                                    @Html.EditorFor(model => model.Documento, new { htmlAttributes = new { @class = "form-control", @id="documento", @required = "required", maxlength = "18", onkeypress = "mascaraDocumento(event)", onpaste = "mascaraDocumentoColar(event)"}})
+                                </div>
+                                <div class="mb-3 col-md-3" id="input-inscricao-estadual" disabled data-bs-toggle="tooltip" data-bs-html="true" title="Inscrição Estadual do Cliente, selecionar Isento caso assim for.">
+                                    @Html.Label("","Inscrição Estadual ", new { @class = "form-label" , @id="label-icon-inscricao-estadual"})
+                                    <small class="text-muted float-end">
+                                        <button class="btn btn-sm btn-primary btn-validacao-inscricao-estadual" disabled data-bs-toggle="tooltip" data-bs-html="true" title="Necessário validar se a inscrição estadual já está em uso no sistema!">Validar</button>
+                                    </small>
+                                    @Html.EditorFor(model => model.InscricaoEstadual, new { htmlAttributes = new { @class = "form-control", @required = "required"}})
+                                </div>
+                                <div class="mb-3 col-md-3">
+                                    @Html.Label("","Isento?", new { @class = "form-label" })
+                                    <div class="form-check form-switch">
+                                        @Html.CheckBoxFor(model => model.Isento, new { @class="form-check-input", @type="checkbox", @role="switch", @id="isento" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-4" disabled data-bs-toggle="tooltip" data-bs-html="true" title="Selecione o gênero do Cliente.">
+                                    @Html.Label("","Gênero", new { @class = "form-label" })
+                                    @Html.DropDownListFor(model => model.Genero,
+                                new SelectList(Enum.GetValues(typeof(EnumHelpers.Genero))), new { @class = "form-control", @required = "required" })
+                                </div>
+                                <div class="mb-3 col-md-4" disabled data-bs-toggle="tooltip" data-bs-html="true" title="Data de nascimento do Cliente.">
+                                    @Html.Label("","Data Nascimento", new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.DataNascimento, new { htmlAttributes = new { @class = "form-control", @type="date", @required = "required"}})
+                                </div>
+                                <div class="mb-3 col-md-4">
+                                    @Html.Label("","Bloqueado?", new { @class = "form-label" })
+                                    <div class="form-check form-switch">
+                                        @Html.CheckBoxFor(model => model.Bloqueado, new { @class="form-check-input", @type="checkbox", @role="switch" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    @Html.Label("","Senha", new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.Senha, new { htmlAttributes = new { @class = "form-control", @type="password", id="senha", @required = "required"}})
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    @Html.Label("","Confirma Senha", new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.ConfirmaSenha, new { htmlAttributes = new { @class = "form-control", @type="password", id="confirmasenha", @required = "required"}})
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <button type="submit" class="btn btn-primary me-2 botaoCadastrar" disabled>Cadastrar</button>
+                            <a class="btn btn-primary mr-2" href="@Url.Action("Index", "Cliente")">
+                                <i class="fas fa-undo-alt"></i> Voltar
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const isentoInput = document.querySelector('#isento');
+    const inscricaoEstadualInput = document.querySelector('#InscricaoEstadual');
+    const iconeValidacaoInscricaoEstadual = document.querySelector('#label-icon-inscricao-estadual i');
+    const botaoValidarInscricao = document.querySelector(".btn-validacao-inscricao-estadual");
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var isentoCheckbox = isentoInput;
+        var labelIconInscricaoEstadual = iconeValidacaoInscricaoEstadual;
+
+        isentoCheckbox.addEventListener("change", function () {
+            if (isentoCheckbox.checked) {
+                inscricaoEstadualValida = false;
+                $("#valid-icon-inscricao").remove();
+                botaoValidarInscricao.disabled = true;
+            }
+        });
+    });
+
+    // Inicio -> Open / Close input Inscrição Estadual
+    isentoInput.addEventListener('change', (event) => {
+        if (event.target.checked) {
+            inscricaoEstadualInput.disabled = true;
+            inscricaoEstadualInput.value = '';
+            inscricaoEstadualInput.removeAttribute("required");
+        } else {
+            inscricaoEstadualInput.disabled = false;
+            inscricaoEstadualInput.setAttribute("required", "required");
+        }
+    });
+    // Fim -> Open / Close input Inscrição Estadual
+
+    // Inicio -> Validação InscricaoEstadual
+    inscricaoEstadualInput.oninput = async () => {
+        botaoValidarInscricao.disabled = !(inscricaoEstadualInput.value.length >= 3);
+        botaoValidarInscricao.classList.toggle("fa-blink", !botaoValidarInscricao.disabled);
+
+        if (inscricaoEstadualValida) {
+            inscricaoEstadualValida = false;
+            await ValidarFormulario(); // Aguardar a conclusão desta função, se ela for assíncrona
+            document.querySelector("#label-icon-inscricao-estadual i")?.remove();
+        }
+    }
+
+    botaoValidarInscricao.onclick = async (e) => {
+        e.preventDefault();
+        if (inscricaoEstadualInput.value.length >= 3) {
+            await ValidarInscricaoEstadualCadastrado(ValidarFormulario);
+        } else {
+            toastr.error('Favor Informar uma inscrição estadual valida !');
+        }
+    }
+
+    // Fim -> Validação InscricaoEstadual
+
+    // Inicio -> Validação Email
+    const emailInput = document.querySelector("#email");
+    const botaoValidarEmail = document.querySelector(".btn-validacao-email");
+
+    emailInput.oninput = async () => {
+        botaoValidarEmail.disabled = !(/^[^@@]+@@[^@@]+$/).test(emailInput.value)
+        botaoValidarEmail.classList.toggle("fa-blink", !botaoValidarEmail.disabled)
+        if (emailValido) {
+            emailValido = false;
+            await ValidarFormulario();
+            document.querySelector("#label-icon-email i")?.remove();
+        }
+    }
+
+    botaoValidarEmail.onclick = async (e) => {
+        e.preventDefault();
+        if (emailInput.value.length >= 3) {
+            await ValidarEmailCadastrado(ValidarFormulario);
+        } else {
+            toastr.error('Favor Informar um e-mail valido !');
+        }
+    }
+
+    // Fim -> Validação Email
+
+    // Inicio -> Validação Documento CPF / CNPJ
+    const documentoInput = document.querySelector("#documento");
+    const botaoValidarDocumento = document.querySelector(".btn-validacao-documento");
+
+    documentoInput.oninput = async () => {
+        botaoValidarDocumento.disabled = !(documentoInput.value.length >= 3 && documentoInput != null);
+        botaoValidarDocumento.classList.toggle("fa-blink", !botaoValidarDocumento.disabled);
+
+        if (documentoValido) {
+            documentoValido = false;
+            await ValidarFormulario();
+            document.querySelector("#label-icon-documento i")?.remove();
+        }
+    }
+
+    documentoInput.oninput = async () => {
+        botaoValidarDocumento.disabled = !(documentoInput.value.length >= 3 && documentoInput != null)
+        botaoValidarDocumento.classList.toggle("fa-blink", !botaoValidarDocumento.disabled)
+        if (documentoValido) {
+            documentoValido = false;
+            await ValidarFormulario();
+            document.querySelector("#label-icon-documento i")?.remove();
+        }
+    }
+
+    botaoValidarDocumento.onclick = async (e) => {
+        e.preventDefault();
+        if (documentoInput.value.length >= 3) {
+            await ValidarDocumento(ValidarFormulario);
+        } else {
+            toastr.error('Favor Informar um CPF / CNPJ valido !');
+        }
+    }
+
+    // Fim -> Validação Documento CPF / CNPJ
+
+    // Inicio -> Validação Botão submit
+
+    const botaoCadastrar = document.querySelector(".botaoCadastrar");
+    async function ValidarFormulario() {
+        botaoCadastrar.disabled = !(documentoValido && emailValido && senhasIguais && inscricaoEstadualValida);
+    }
+
+    // Fim -> Validação Botão submit
+
+    // Inicio -> Validação Senhas
+    let inputSenha = document.querySelector('#senha');
+    let inputConfirmaSenha = document.querySelector('#confirmasenha');
+    let senhasIguais = false;
+
+    inputConfirmaSenha.addEventListener('focusout', async () => {
+        if (inputSenha.value !== inputConfirmaSenha.value) {
+            toastr.error('As senhas não conferem !');
+            senhasIguais = false;
+            await ValidarFormulario();
+        } else {
+            senhasIguais = true;
+            await ValidarFormulario();
+        }
+    });
+
+    inputSenha.addEventListener('focusout', () => {
+        if (inputConfirmaSenha.value != null) {
+            const focusOutEvent = new Event('focusout');
+            inputConfirmaSenha.dispatchEvent(focusOutEvent);
+        }
+    });
+
+    // Fim -> Validação Senhas
+
+    // INICIO -> Mascara Documento CPF / CNPJ
+
+    function mascaraDocumento(event) {
+        const input = event.target;
+        let documento = input.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+        let valorMascara = '';
+
+        if (documento.length <= 11) {
+            // CPF
+            valorMascara = documento.replace(/(\d{3})(\d{3})(\d{3})/, '$1.$2.$3-');
+        } else {
+            // CNPJ
+            valorMascara = documento.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+        }
+        input.value = valorMascara.substring(0, 18); // Limita o campo ao número máximo de caracteres
+    }
+
+    function mascaraDocumentoColar(event) {
+        setTimeout(function () {
+            mascaraDocumento(event);
+        }, 10);
+    }
+
+            // FIM -> Mascara Documento CPF / CNPJ
+
+                // INCIO -> Mascara Telefone
+
+            //function mascaraTelefone(event) {
+            //    const input = event.target;
+            //    let valorMascara = '';
+            //    alert("tesete")
+            //    if (!telefone.length >= 3) return ""
+
+            //    telefone = value.replace(/\D/g, '')
+            //    telefone = value.replace(/(\d{2})(\d)/, "($1) $2")
+            //    telefone = value.replace(/(\d)(\d{4})$/, "$1-$2")
+            //    return telefone
+
+            //    input.value = valorMascara.substring(0, 15); // Limita o campo ao número máximo de caracteres
+            //}
+
+
+            // FIM -> Mascara Telefone
+</script>

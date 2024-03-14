@@ -1,0 +1,86 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.toast-top-right {
+    top: 60px;
+    right: 12px;
+}
+
+@keyframes fa-blink {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.fa-blink {
+    -webkit-animation: fa-blink .75s linear infinite;
+    -moz-animation: fa-blink .75s linear infinite;
+    -ms-animation: fa-blink .75s linear infinite;
+    -o-animation: fa-blink .75s linear infinite;
+    animation: fa-blink .75s linear infinite;
+}
+
+body {
+    background: whitesmoke;
+/*    text-align: center;*/
+}
+
+button {
+    background-color: darkslategrey;
+    color: white;
+    border: 0;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 7px;
+    padding: 10px 10px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+#success {
+    background: green;
+}
+
+#error {
+    background: red;
+}
+
+#warning {
+    background: coral;
+}
+
+#info {
+    background: cornflowerblue;
+}
+
+#question {
+    background: grey;
+}

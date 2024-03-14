@@ -1,0 +1,221 @@
+﻿@model DSR_MAGALU_BUSINESS.Models.ClienteViewModel
+@using DSR_MAGALU_BUSINESS.Helpers
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <h5 class="card-header">Editar Clientes @Model.NomeClienteRazaoSocial</h5>
+                <hr class="my-0">
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="mb-3 col-md-12">
+                                @Html.LabelFor(model => model.NomeClienteRazaoSocial, "Nome do Cliente/Razão Social", htmlAttributes: new { @class = "form-label" })
+                                <span class="form-control">@Model.NomeClienteRazaoSocial</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-4">
+                                @Html.LabelFor(model => model.Email, "E-mail", htmlAttributes: new { @class = "form-label", id = "label-icon-email" })
+                                <span class="form-control">@Model.Email</span>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                @Html.LabelFor(model => model.Telefone, "Telefone", htmlAttributes: new { @class = "form-label" })
+                                <span class="form-control">@Model.Telefone</span>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                @Html.LabelFor(model => model.DataCadastro, "Data de Cadastro", htmlAttributes: new { @class = "form-label" })
+                                <span class="form-control">@Model.DataCadastro?.ToString("dd/MM/yyyy")</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-3">
+                                @Html.LabelFor(model => model.TipoPessoa, "Tipo de Pessoa", htmlAttributes: new { @class = "form-label" })
+                                <span class="form-control">@Model.TipoPessoa</span>
+                            </div>
+                            <div class="mb-3 col-md-3">
+                                @Html.LabelFor(model => model.Documento, "CPF/CNPJ", htmlAttributes: new { @class = "form-label", id = "label-icon-documento" })
+                                <span class="form-control">@Model.Documento</span>
+                            </div>
+                            <div class="mb-3 col-md-3">
+                                @Html.LabelFor(model => model.InscricaoEstadual, "Inscrição Estadual", htmlAttributes: new { @class = "form-label" })
+                                <span class="form-control">@Model.InscricaoEstadual</span>
+                            </div>
+                            <div class="mb-3 col-md-3">
+                                @Html.LabelFor(model => model.Isento, "Isento?", htmlAttributes: new { @class = "form-label" })
+                                <div class="form-check form-switch">
+                                    @Html.CheckBoxFor(model => model.Isento, new { @class = "form-check-input", @disabled = "disabled" })
+                                    <span class="form-check-label">
+                                        @Html.Raw(Model.Isento ? "Sim" : "Não")
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-4">
+                                @Html.LabelFor(model => model.Genero, "Gênero", htmlAttributes: new { @class = "form-label" })
+                                <span class="form-control">@Model.Genero</span>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                @Html.LabelFor(model => model.DataNascimento, "Data Nascimento", htmlAttributes: new { @class = "form-label" })
+                                <span class="form-control">@Model.DataNascimento?.ToString("dd/MM/yyyy")</span>
+                            </div>
+                            <div class="mb-3 col-md-3">
+                                @Html.LabelFor(model => model.Bloqueado, "Bloqueado?", htmlAttributes: new { @class = "form-label" })
+                                <div class="form-check form-switch">
+                                    @Html.CheckBoxFor(model => model.Bloqueado, new { @class = "form-check-input", @disabled = "disabled" })
+                                    <span class="form-check-label">
+                                        @Html.Raw(Model.Bloqueado ? "Sim" : "Não")
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                @Html.LabelFor(model => model.Senha, "Senha", htmlAttributes: new { @class = "form-label" })
+                                <span class="form-control">*****</span>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                @Html.LabelFor(model => model.ConfirmaSenha, "Confirma Senha", htmlAttributes: new { @class = "form-label" })
+                                <span class="form-control">*****</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <a class="btn btn-primary mr-2" href="@Url.Action("Index", "Cliente")">
+                                    <i class="fas fa-undo-alt"></i> Voltar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    // Inicio -> Open / Close input Inscrição Estadual
+    const isentoInput = document.querySelector('#isento');
+    const inscricaoEstadualInput = document.querySelector('#InscricaoEstadual');
+
+    isentoInput.addEventListener('change', (event) => {
+        if (event.target.checked) {
+            inscricaoEstadualInput.readOnly = true;
+            inscricaoEstadualInput.value = '';
+        } else {
+            inscricaoEstadualInput.readOnly = false;
+        }
+    });
+    // Fim -> Open / Close input Inscrição Estadual
+
+    // Inicio -> Validação Email
+    const emailInput = document.querySelector("#email");
+    const botaoValidarEmail = document.querySelector(".btn-validacao-email");
+
+    emailInput.oninput = () => {
+        botaoValidarEmail.disabled = !(/^[^@@]+@@[^@@]+$/).test(emailInput.value)
+        botaoValidarEmail.classList.toggle("fa-blink", !botaoValidarEmail.disabled)
+        if (emailValido) {
+            emailValido = false;
+            ValidarFormulario();
+            document.querySelector("#label-icon-email i")?.remove();
+        }
+    }
+
+    botaoValidarEmail.onclick = (e) => {
+        e.preventDefault();
+        ValidarEmailCadastrado(ValidarFormulario);
+    }
+
+    // Fim -> Validação Email
+
+    // Inicio -> Validação Documento CPF / CNPJ
+    const documentoInput = document.querySelector("#documento");
+    const botaoValidarDocumento = document.querySelector(".btn-validacao-documento");
+
+    documentoInput.oninput = () => {
+        botaoValidarDocumento.disabled = !(documentoInput.value.length >= 3)
+        botaoValidarDocumento.classList.toggle("fa-blink", !botaoValidarDocumento.disabled)
+        if (documentoValido) {
+            documentoValido = false;
+            ValidarFormulario();
+            document.querySelector("#label-icon-documento i")?.remove();
+        }
+    }
+
+    botaoValidarDocumento.onclick = (e) => {
+        e.preventDefault();
+        ValidarEmailDocumento(ValidarFormulario);
+    }
+    // Fim -> Validação Documento CPF / CNPJ
+
+    // Inicio -> Validação Botão submit
+
+    const botaoCadastrar = document.querySelector(".botaoCadastrar");
+    function ValidarFormulario() {
+        botaoCadastrar.disabled = !(documentoValido && emailValido && senhasIguais)
+    }
+
+    // Fim -> Validação Botão submit
+
+    // Inicio -> Validação Senhas
+    let inputSenha = document.querySelector('#senha');
+    let inputConfirmaSenha = document.querySelector('#confirmasenha');
+    let senhasIguais = false;
+
+    inputConfirmaSenha.addEventListener('focusout', () => {
+        if (inputSenha.value !== inputConfirmaSenha.value) {
+            toastr.error('As senhas não conferem !');
+            senhasIguais = false;
+            ValidarFormulario();
+        } else {
+            senhasIguais = true;
+            ValidarFormulario();
+        }
+    });
+
+    inputSenha.addEventListener('focusout', () => {
+        if (inputConfirmaSenha.value != null) {
+            const focusOutEvent = new Event('focusout');
+            inputConfirmaSenha.dispatchEvent(focusOutEvent);
+        }
+    });
+
+    // Fim -> Validação Senhas
+
+    // INICIO -> Mascara Documento CPF / CNPJ
+
+    function mascaraDocumento(event) {
+        const input = event.target;
+        let documento = input.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+        let valorMascara = '';
+
+        if (documento.length <= 11) {
+            // CPF
+            valorMascara = documento.replace(/(\d{3})(\d{3})(\d{3})/, '$1.$2.$3-');
+        } else {
+            // CNPJ
+            valorMascara = documento.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+        }
+        input.value = valorMascara.substring(0, 18); // Limita o campo ao número máximo de caracteres
+    }
+
+    function mascaraDocumentoColar(event) {
+        setTimeout(function () {
+            mascaraDocumento(event);
+        }, 10);
+    }
+    // FIM -> Mascara Documento CPF / CNPJ
+
+    // INICIO -> Mascara Telefone
+    jQuery(function ($) {
+        console.log('hi');
+        $('#telefone').mask('(00) 00000-0000');
+                                // FIM -> Mascara Telefone
+
+</script>

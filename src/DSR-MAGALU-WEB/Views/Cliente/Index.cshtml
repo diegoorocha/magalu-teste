@@ -1,0 +1,229 @@
+﻿@using System.Globalization;
+@using DSR_MAGALU_DATA.Entities;
+@using Microsoft.AspNetCore.Html;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using X.PagedList.Web.Common;
+@model DSR_MAGALU_BUSINESS.Models.ClienteViewModel;
+
+@{
+    var hoje = DateTime.UtcNow.Date.ToString("yyyy-MM-dd");
+}
+
+<style>
+    .accordion-button {
+        background-color: rgba(0, 0, 0, .03);
+    }
+</style>
+
+<div class="card">
+    <form asp-controller="Cliente" asp-action="Index" method="post" target="_self">
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Consulte os seus Clientes cadastrados na sua Loja ou realize o cadastro de novos Cliente
+                    <small class="float-end">
+                        <a class="btn btn-sm btn-primary" href="@Url.Action("Cadastrar", "Cliente")">Adicionar Cliente </a>
+                    </small>
+                </h5>
+
+                <div class="card">
+                    <div class="card-header accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-filtros" aria-expanded="false" id="btn-accordion-filtros">
+                        Filtros
+                    </div>
+                    <div id="accordion-filtros" class="accordion-collapse collapse">
+                        <div class="card-body" id="filtros">
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(m => m.NomeClienteRazaoSocial, "Nome/Razão Social", new { @class = "form-label" })
+                                    @Html.TextBoxFor(m => m.NomeClienteRazaoSocial, new { @class = "form-control", id="razao-social", placeholder = "Nome ou Razão Social do Cliente.", data_val = "false" })
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.LabelFor(m => m.Email, "E-mail", new { @class = "form-label" })
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control",id="email", placeholder = "E-mail do Cliente.", data_val = "false" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-4">
+                                    @Html.LabelFor(m => m.Telefone, "Telefone", new { @class = "form-label" })
+                                    @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control", id="telefone", placeholder = "Telefone do Cliente.", data_val = "false" })
+                                </div>
+                                <div class="col-sm-4">
+                                    @Html.LabelFor(m => m.DataCadastro, "Data Cadastro", new { @class = "form-label" })
+                                    <div>
+                                        @Html.TextBoxFor(m => m.DataCadastro, "{0:yyyy-MM-dd}", new { @class = "form-control", @id="data-cadastro", @placeholder = "Selecione uma data.", @type = "date", @max = hoje, @value = hoje })
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    @Html.LabelFor(m => m.Bloqueado, "Bloqueado?", new { @class = "form-label" })
+                                    <div class="form-check form-switch">
+                                        @Html.CheckBoxFor(m => m.Bloqueado, new { @class = "form-check-input", @type = "checkbox", @role = "switch", id = "bloqueadoCheckbox"})
+                                          <span id="bloqueadoText">@((Model.Bloqueado) ? "Sim" : "Não")</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 mt-2">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <button type="button" class="btn btn-primary mr-2" id="btn-limpar-filtro" onclick="limparfiltros()">Limpar filtros</button>
+                                            <button type="submit" class="btn btn-primary" id="btn-aplicar-filtro" onclick="aplicarFiltros()">Aplicar filtros</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="card">
+                    <div class="card-header">
+                        Compradores Cadastrados
+                    </div>
+                    <div class="card-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <input type="checkbox" id="checkAll" onclick="toggleCheckAll()" />
+                                                    </th>
+                                                    <th>Nome/Razão Social</th>
+                                                    <th>E-mail</th>
+                                                    <th>Telefone</th>
+                                                    <th>Data de Cadastro</th>
+                                                    <th>Bloqueado</th>
+                                                    <th>Ações</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.Lista)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @Html.CheckBoxFor(modelItem => item.Selecionado, new { @class = "checkbox-item" })
+                                                        </td>
+                                                        <td>@item.NomeClienteRazaoSocial</td>
+                                                        <td>@item.Email</td>
+                                                        @{
+                                                            var telefone = string.Format("({0}{1}) {2}{3}{4}{5}-{6}{7}{8}{9}",
+                                                            item.Telefone[0], item.Telefone[1],
+                                                            item.Telefone[2], item.Telefone[3],
+                                                            item.Telefone[4], item.Telefone[5],
+                                                            item.Telefone[6], item.Telefone[7],
+                                                            item.Telefone[8], item.Telefone[9]);
+                                                        }
+                                                        <td>@telefone</td>
+                                                        <td>@item.DataCadastro?.ToString("dd/MM/yyyy")</td>
+                                                        <td>
+                                                            @Html.CheckBox("Bloqueado", item.Bloqueado, new { @class = "checkbox-bloqueado", disabled = "disabled" })
+                                                        </td>
+                                                        <td style="text-align:center">
+                                                            <a class="btn btn-icon btn-sm btn-primary" href="@Url.Action("Detalhes", "Cliente", new {id = item.Id})">
+                                                                <i class="fas fa-search-plus"></i>
+                                                            </a>
+                                                            <a class="btn btn-icon btn-sm btn-warning" href="@Url.Action("Editar", "Cliente", new {id = item.Id})">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+    </form>
+    <div class="container">
+        @if (Model.Lista.Count == 0)
+        {
+            <div class="row">
+                <div class="col-md-8">
+                </div>
+                <div class="col-md-4">
+                    <span class="float-end">
+                        Não há nenhum cliente cadastrado.
+                    </span>
+                </div>
+            </div>
+        }
+
+        @if (Model.Lista.Count >= 1)
+        {
+            <div class="row">
+                <div class="col-md-8">
+                    @Html.PagedListPager(Model.Lista, pagina => Url.Action("Index", new { pagina }), new PagedListRenderOptions { LiElementClasses = new[] { "page-item" }, PageClasses = new[] { "page-link" } })
+                </div>
+                <div class="col-md-4">
+                    <span class="float-end">
+                        Há @Model.Lista.TotalItemCount clientes cadastrados.
+                    </span>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+
+    function limparfiltros() {
+        document.querySelector('#razao-social').value = '';
+        document.querySelector('#email').value = '';
+        document.querySelector('#telefone').value = '';
+        window.location.href = "/index";
+    }
+
+        // Função para selecionar ou desmarcar todos os checkboxes
+        function toggleCheckAll() {
+            var checkboxes = document.getElementsByClassName('checkbox-item');
+            var checkAll = document.getElementById('checkAll');
+
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = checkAll.checked;
+            }
+        }
+
+        // Função para desmarcar o checkbox "checkAll" se um dos checkboxes individuais for desmarcado
+        function toggleIndividualCheck() {
+            var checkboxes = document.getElementsByClassName('checkbox-item');
+            var checkAll = document.getElementById('checkAll');
+            var allChecked = true;
+
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (!checkboxes[i].checked) {
+                    allChecked = false;
+                    break;
+                }
+            }
+
+            checkAll.checked = allChecked;
+        }
+
+        // INICIO -> Função para alterar o valor do texto bloqueado (sim não)
+        document.addEventListener("DOMContentLoaded", function () {
+            var checkbox = document.getElementById('bloqueadoCheckbox');
+            var textSpan = document.getElementById('bloqueadoText');
+
+            checkbox.addEventListener('change', function () {
+                var isChecked = this.checked;
+                textSpan.textContent = isChecked ? 'Sim' : 'Não';
+            });
+        });
+
+        // FIM -> Função para alterar o valor do texto bloqueado (sim não)
+
+        // INICIO -> Função para não permitir a data cadastro maior que hoje
+
+        var hoje = new Date().toISOString().split('T')[0];
+        document.getElementById("Filtros_DataCadastro").setAttribute("max", hoje);
+
+                                        // FIM -> Função para não permitir a data cadastro maior que hoje
+
+</script>
