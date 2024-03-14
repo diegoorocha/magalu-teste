@@ -19,7 +19,9 @@ Utilizado banco de dados `MYSql`, com o ORM `entity framework core 7`.
 -- *Recomendo em seu banco de dados MY SQL em localhost, crie um banco chamado `magalu`, para não editar os scripts.*
 
 2 - Em seu banco de dados MY SQL, será necessário executar os scrips que estão na pasta do projeto chamado `scripts`.
+
 -- *Executar o primeiro script chamado: `CREATE TABLE - CLIENTE.sql` para criar a tabela `cliente`.*
+
 -- *Executar o segundo script chamado: `INSERT TABLE - CLIENTE.sql` para inserir dados a tabela.*
 
 3 - Executar o projeto WEB chamado `DSR-MAGALU-WEB`, necessário defini-lo como projeto de inicialização !
