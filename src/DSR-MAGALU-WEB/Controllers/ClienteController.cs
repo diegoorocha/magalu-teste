@@ -133,7 +133,7 @@ namespace DSR_MAGALU_WEB.Controllers
         [HttpPost]
         public async Task<JsonResult> ValidarEmail(string email)
         {
-            var (tipoToaster, mensagemToaster, validado) = await _clienteService.ValidarEmail(email);
+            var (tipoToaster, mensagemToaster, validado) = await _clienteService.ValidarEmail(email, true);
 
             _toasterService.AdicionarToaster(tipoToaster, mensagemToaster);
             return Json(validado);
@@ -142,7 +142,7 @@ namespace DSR_MAGALU_WEB.Controllers
         [HttpPost]
         public async Task<JsonResult> ValidarDocumentoCpfCnpj(string documento)
         {
-            var (tipoToaster, mensagemToaster, validado) = await _clienteService.ValidarDocumentoCpfCnpj(documento);
+            var (tipoToaster, mensagemToaster, validado) = await _clienteService.ValidarDocumentoCpfCnpj(documento, true);
 
             _toasterService.AdicionarToaster(tipoToaster, mensagemToaster);
             return Json(validado);
@@ -151,7 +151,7 @@ namespace DSR_MAGALU_WEB.Controllers
         [HttpPost]
         public async Task<JsonResult> ValidarInscricaoEstadual(string inscricaoEstadual)
         {
-            var (tipoToaster, mensagemToaster, validado) = await _clienteService.ValidarInscricaoEstadual(inscricaoEstadual);
+            var (tipoToaster, mensagemToaster, validado) = await _clienteService.ValidarInscricaoEstadual(inscricaoEstadual, true);
 
             _toasterService.AdicionarToaster(tipoToaster, mensagemToaster);
             return Json(validado);

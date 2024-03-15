@@ -82,7 +82,7 @@ namespace DSR_MAGALU_BUSINESS.Services
             return _mapper.Map<ClienteViewModel>(cliente);
         }
 
-        public async Task<Tuple<string, string, bool>> ValidarEmail(string email, bool validar = false)
+        public async Task<Tuple<string, string, bool>> ValidarEmail(string email, bool validarEmail = false)
         {
             if (string.IsNullOrEmpty(email.Trim()))
                 return new Tuple<string, string, bool>("info", Mensagens.EmailNaoInformado, false);
@@ -90,13 +90,18 @@ namespace DSR_MAGALU_BUSINESS.Services
             if (!EmailHelpers.ValidarEmail(email.Trim()))
                 return new Tuple<string, string, bool>("alerta", string.Format(Mensagens.EmailNaoValido, email.Trim()), false);
 
-            if (validar || await ValidarEmailJaCadastrado(email.Trim()))
-                return new Tuple<string, string, bool>("alerta", Mensagens.EmailJaUtilizado, false);
+            if (validarEmail)
+            {
+                if (await ValidarEmailJaCadastrado(email.Trim()))
+                {
+                    return new Tuple<string, string, bool>("alerta", Mensagens.EmailJaUtilizado, false);
+                }
+            }
 
             return new Tuple<string, string, bool>("info", string.Format(Mensagens.EmailNaoCadastrado, email.Trim()), true);
         }
 
-        public async Task<Tuple<string, string, bool>> ValidarDocumentoCpfCnpj(string cpfCnpj, bool validar = false)
+        public async Task<Tuple<string, string, bool>> ValidarDocumentoCpfCnpj(string cpfCnpj, bool validarDocumento = false)
         {
             cpfCnpj = Regex.Replace(cpfCnpj, "[^0-9]", "");
 
@@ -106,21 +111,31 @@ namespace DSR_MAGALU_BUSINESS.Services
             if (!DocumentoHelpers.ValidarDocumentoCpfCnpj(cpfCnpj.Trim()))
                 return new Tuple<string, string, bool>("alerta", string.Format(Mensagens.DocumentoNaoValido, cpfCnpj.Trim()), false);
 
-            if (validar || await ValidarDocumentoCpfCnpjJaCadastrado(cpfCnpj.Trim()))
-                return new Tuple<string, string, bool>("alerta", Mensagens.DocumentoJaUtilizado, false);
+            if (validarDocumento)
+            {
+                if (await ValidarDocumentoCpfCnpjJaCadastrado(cpfCnpj.Trim()))
+                {
+                    return new Tuple<string, string, bool>("alerta", Mensagens.DocumentoJaUtilizado, false);
+                }
+            }
 
-            return new Tuple<string, string, bool>("info", string.Format(Mensagens.DocumentoNaoCadastrado, cpfCnpj.Trim()), true);
+             return new Tuple<string, string, bool>("info", string.Format(Mensagens.DocumentoNaoCadastrado, cpfCnpj.Trim()), true);
         }
 
-        public async Task<Tuple<string, string, bool>> ValidarInscricaoEstadual(string inscricaoEstadual, bool validar = false)
+        public async Task<Tuple<string, string, bool>> ValidarInscricaoEstadual(string inscricaoEstadual, bool validarInscricaoEstadual = false)
         {
             inscricaoEstadual = Regex.Replace(inscricaoEstadual, "[^0-9]", "");
 
             if (string.IsNullOrEmpty(inscricaoEstadual.Trim()))
                 return new Tuple<string, string, bool>("info", Mensagens.InscricaoEstadualNaoInformada, false);
 
-            if (validar || await ValidarInscricaoEstadualJaCadastrado(inscricaoEstadual.Trim()))
-                return new Tuple<string, string, bool>("alerta", Mensagens.InscricaoEstadualJaUtilizada, false);
+            if (validarInscricaoEstadual)
+            {
+                if (await ValidarInscricaoEstadualJaCadastrado(inscricaoEstadual.Trim()))
+                {
+                    return new Tuple<string, string, bool>("alerta", Mensagens.InscricaoEstadualJaUtilizada, false);
+                }
+            }
 
             return new Tuple<string, string, bool>("info", string.Format(Mensagens.InscricaoNaoCadastrada, inscricaoEstadual.Trim()), true);
         }
@@ -220,10 +235,10 @@ namespace DSR_MAGALU_BUSINESS.Services
                     Bloqueado = clienteViewModel.Bloqueado,
                     DataNascimento = clienteViewModel.DataNascimento,
                     Genero = (int)clienteViewModel.Genero,
-                    Id= clienteViewModel.Id,
+                    Id = clienteViewModel.Id,
                     InscricaoEstadual = clienteViewModel.InscricaoEstadual,
                     Isento = clienteViewModel.Isento,
-                    Senha= clienteViewModel.Senha,
+                    Senha = clienteViewModel.Senha,
                     TipoPessoa = (int)clienteViewModel.TipoPessoa
                 };
             }
