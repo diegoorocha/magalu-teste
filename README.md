@@ -5,6 +5,15 @@
 Projeto criado em `.NET 7`, utilizando `MVC` com design patterns de `três camadas`.
 Utilizado banco de dados `MYSql`, com o ORM `entity framework core 7`.
 
+Principais bibliotecas utilizadas:
+- <a href=“https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/7.0.10“>Entity Framework Core 7</a>
+- <a href=“https://www.mysql.com/“>MY SQL</a>
+- <a href=“https://github.com/nabinked/NToastNotify“>NToastNotify</a>
+- <a href=“https://github.com/troygoode/PagedList“>X.PagedList</a>
+- <a href=“https://automapper.org/“>Autommaper</a>
+- <a href=“https://docs.fluentvalidation.net/en/latest/“>Fluent Validation</a>
+- <a href=“https://getbootstrap.com/docs/5.0/getting-started/introduction/“>Bootstrap 5</a>
+
 # Requisitos
 - Visual Studio instalado e funcionando;
 - Bando de dados MYSql instalado e funcionando;
