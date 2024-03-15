@@ -1,4 +1,4 @@
-# Projeto C# / Web - Teste Magalu
+# Projeto C# / Web
 
 ### - >  Qual é a missão deste protejo ? Criar um `CRUD` de Clientes, com listagem, filtros, validações, toaster e paginação.
 
