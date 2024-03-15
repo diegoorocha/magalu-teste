@@ -1,4 +1,4 @@
-# Projeto C# / Web - Teste Magalu
+# Projeto C# / Web
 
 ### - >  Qual é a missão deste protejo ? Criar um `CRUD` de Clientes, com listagem, filtros, validações, toaster e paginação.
 
@@ -15,7 +15,7 @@ Utilizado banco de dados `MYSql`, com o ORM `entity framework core 7`.
 
 -- *Recomendo em seu banco de dados MY SQL em localhost, crie um banco chamado `magalu`, para não editar os scripts.*
 
-2 - Em seu banco de dados MY SQL, será necessário executar os scrips que estão na pasta do projeto chamado `scripts`.
+2 - Em seu banco de dados MY SQL, será necessário executar os scripts que estão na pasta do projeto chamado `scripts`.
 
 -- *Executar o primeiro script chamado: `CREATE TABLE - CLIENTE.sql` para criar a tabela `cliente`.*
 
@@ -45,10 +45,15 @@ Utilizado banco de dados `MYSql`, com o ORM `entity framework core 7`.
 <a href="https://ibb.co/BP28BPW"><img src="https://i.ibb.co/3smtcs6/imagem-2024-03-14-211843837.png" alt="imagem-2024-03-14-211843837" border="0"></a>
 
 -> Importante: Para realizar o cadastro, é necessário que TODOS os itens abaixos estejam validados, senão o botão `CADASTRAR` não será habilitado.
+
 ** Email **
+
 ** CFP / CNPJ **
+
 ** Inscrição Estadual **
+
 ** Senha e Confirma Senha **
+
 
 -- E-mail (valida se a sintaxe está correta, e sem uso)
 
