@@ -45,10 +45,15 @@ Utilizado banco de dados `MYSql`, com o ORM `entity framework core 7`.
 <a href="https://ibb.co/BP28BPW"><img src="https://i.ibb.co/3smtcs6/imagem-2024-03-14-211843837.png" alt="imagem-2024-03-14-211843837" border="0"></a>
 
 -> Importante: Para realizar o cadastro, é necessário que TODOS os itens abaixos estejam validados, senão o botão `CADASTRAR` não será habilitado.
+
 ** Email **
+
 ** CFP / CNPJ **
+
 ** Inscrição Estadual **
+
 ** Senha e Confirma Senha **
+
 
 -- E-mail (valida se a sintaxe está correta, e sem uso)
 
