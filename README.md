@@ -1,9 +1,5 @@
 # Projeto C# / Web - Teste Magalu
 
-[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
-
-[![PRs OIe](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=shields)](http://makeapullrequest.com)
-
 ### - >  Qual é a missão deste protejo ? Criar um `CRUD` de Clientes, com listagem, filtros, validações, toaster e paginação.
 
 Projeto criado em `.NET 7`, utilizando `MVC` com design patterns de `três camadas`.
