@@ -12,6 +12,7 @@ Utilizado banco de dados `MYSql`, com o ORM `entity framework core 7`.
 # Instalação 
 
 1 - Configurar a connection string na sua máquina, a default do projeto é : `server=127.0.0.1;uid=root;pwd=root;database=magalu`.
+
 -- *Recomendo em seu banco de dados MY SQL em localhost, crie um banco chamado `magalu`, para não editar os scripts.*
 
 2 - Em seu banco de dados MY SQL, será necessário executar os scrips que estão na pasta do projeto chamado `scripts`.
@@ -28,6 +29,7 @@ Utilizado banco de dados `MYSql`, com o ORM `entity framework core 7`.
 - [ TELA INDEX ] Ao rodar o projeto, ele vai para a página de listagem de clientes:
   
   <a href="https://ibb.co/86tXBSp"><img src="https://i.ibb.co/BqFwPSx/imagem-2024-03-14-204710773.png" alt="imagem-2024-03-14-204710773" border="0"></a>
+  
   *Nesta retorna todos os clientes cadastrados, `que não esteja bloqueado por default`, com as informações no grid e opções para `filtrar` `visualizar` e `editar`. *
 
 - [ TELA FILTROS ] Pa tela de filtros é necessário escolher qualquer uma da opções, sendo `nome`, `e-mail`, `telefone`, `data de cadastro`, e se está com o status `bloqueado`.
@@ -49,14 +51,17 @@ Utilizado banco de dados `MYSql`, com o ORM `entity framework core 7`.
 ** Senha e Confirma Senha **
 
 -- E-mail (valida se a sintaxe está correta, e sem uso)
+
   --- Na tela ao terminar de digitar o seu e-mail, será necessário validar o e-mail em questão, clicando no botão `validar`. Após a validação (Botão piscando = E-mail inválido / Botão não piscando = E-mail bom para uso).
 
   
 -- CPF / CNPJ (valida se a sintaxe está correta, e sem uso)
+
   --- Na tela ao terminar de digitar o seu documento, será necessário validar o documento em questão, clicando no botão `validar`. Após a validação (Botão piscando = Documento inválido / Botão não piscando = Documento bom para uso).
 
   
 -- Inscrição Estadual (somente se está sem uso, quando o cliente não for isento)
+
   --- Na tela ao terminar de digitar a inscrição estadual, será necessário validar o documento em questão, clicando no botão `validar`. Após a validação (Botão piscando = Inscrição estadual inválida / Botão não piscando = Inscrição estadual boa para uso).
 
   <a href="https://ibb.co/vVSNJYS"><img src="https://i.ibb.co/mb3nH83/imagem-2024-03-14-212333422.png" alt="imagem-2024-03-14-212333422" border="0"></a>
@@ -84,5 +89,6 @@ Utilizado banco de dados `MYSql`, com o ORM `entity framework core 7`.
 - [ TELA EDIÇÃO ]
   
   <a href="https://ibb.co/PGwDdXS"><img src="https://i.ibb.co/RTzjqr5/imagem-2024-03-14-214647532.png" alt="imagem-2024-03-14-214647532" border="0"></a>
+  
   *Não será necessário validar os dados antes de enviar as edições.*
   
