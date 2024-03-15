@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h5 class="card-header">Editar Cliente</h5>
+                <h5 class="card-header">Editar @Model.NomeClienteRazaoSocial</h5>
                 <hr class="my-0">
                 <div class="card-body">
                     @using (Html.BeginForm("Editar", "Cliente", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -88,7 +88,9 @@
                         </div>
                         <div class="mt-2">
                             <button type="submit" class="btn btn-primary me-2">Editar</button>
-                            <button type="reset" class="btn btn-outline-secondary">Voltar</button>
+                            <a class="btn btn-primary mr-2" href="@Url.Action("Index", "Cliente")">
+                                <i class="fas fa-undo-alt"></i> Voltar
+                            </a>
                         </div>
                     }
                 </div>

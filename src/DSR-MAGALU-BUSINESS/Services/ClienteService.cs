@@ -90,7 +90,7 @@ namespace DSR_MAGALU_BUSINESS.Services
             if (!EmailHelpers.ValidarEmail(email.Trim()))
                 return new Tuple<string, string, bool>("alerta", string.Format(Mensagens.EmailNaoValido, email.Trim()), false);
 
-            if (validar && await ValidarEmailJaCadastrado(email.Trim()))
+            if (validar || await ValidarEmailJaCadastrado(email.Trim()))
                 return new Tuple<string, string, bool>("alerta", Mensagens.EmailJaUtilizado, false);
 
             return new Tuple<string, string, bool>("info", string.Format(Mensagens.EmailNaoCadastrado, email.Trim()), true);
@@ -106,7 +106,7 @@ namespace DSR_MAGALU_BUSINESS.Services
             if (!DocumentoHelpers.ValidarDocumentoCpfCnpj(cpfCnpj.Trim()))
                 return new Tuple<string, string, bool>("alerta", string.Format(Mensagens.DocumentoNaoValido, cpfCnpj.Trim()), false);
 
-            if (validar && await ValidarDocumentoCpfCnpjJaCadastrado(cpfCnpj.Trim()))
+            if (validar || await ValidarDocumentoCpfCnpjJaCadastrado(cpfCnpj.Trim()))
                 return new Tuple<string, string, bool>("alerta", Mensagens.DocumentoJaUtilizado, false);
 
             return new Tuple<string, string, bool>("info", string.Format(Mensagens.DocumentoNaoCadastrado, cpfCnpj.Trim()), true);
@@ -119,7 +119,7 @@ namespace DSR_MAGALU_BUSINESS.Services
             if (string.IsNullOrEmpty(inscricaoEstadual.Trim()))
                 return new Tuple<string, string, bool>("info", Mensagens.InscricaoEstadualNaoInformada, false);
 
-            if (validar && await ValidarInscricaoEstadualJaCadastrado(inscricaoEstadual.Trim()))
+            if (validar || await ValidarInscricaoEstadualJaCadastrado(inscricaoEstadual.Trim()))
                 return new Tuple<string, string, bool>("alerta", Mensagens.InscricaoEstadualJaUtilizada, false);
 
             return new Tuple<string, string, bool>("info", string.Format(Mensagens.InscricaoNaoCadastrada, inscricaoEstadual.Trim()), true);
